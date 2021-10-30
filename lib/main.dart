@@ -25,6 +25,9 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  var userQuestion = '';
+  var userAnswer = '';
+
   final List<String> buttons = [
     "C",
     "DEL",
@@ -54,7 +57,32 @@ class _HomepageState extends State<Homepage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: Container(),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      userQuestion,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      userAnswer,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Expanded(
             flex: 2,
@@ -69,16 +97,32 @@ class _HomepageState extends State<Homepage> {
               ) {
                 if (index == 0) {
                   return MyButton(
+                      buttonTapped: () {
+                        setState(() {
+                          userQuestion = '';
+                        });
+                      },
                       textColor: Colors.deepPurple,
                       color: Colors.green,
                       buttonText: buttons[index]);
                 } else if (index == 1) {
                   return MyButton(
+                      buttonTapped: () {
+                        setState(() {
+                          userQuestion = userQuestion.substring(
+                              0, userQuestion.length - 1);
+                        });
+                      },
                       textColor: Colors.deepPurple,
                       color: Colors.red,
                       buttonText: buttons[index]);
                 } else {
                   return MyButton(
+                      buttonTapped: () {
+                        setState(() {
+                          userQuestion += buttons[index];
+                        });
+                      },
                       textColor: isOperator(buttons[index])
                           ? Colors.white
                           : Colors.deepPurple,
